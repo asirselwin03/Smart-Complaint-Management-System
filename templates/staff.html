@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<h1>Staff Dashboard</h1>
+	<div class="stats">
+		<div class="card">
+			<b>{{ cases|length }}</b>
+			<span>Total Cases</span>
+		</div>
+		<div class="card">
+			<b>{{ cases|selectattr('status', 'equalto', 'Pending')|list|length }}</b>
+			<span>Pending</span>
+		</div>
+		<div class="card">
+			<b>{{ cases|selectattr('status', 'equalto', 'In Progress')|list|length }}</b>
+			<span>In Progress</span>
+		</div>
+		<div class="card">
+			<b>{{ cases|selectattr('status', 'equalto', 'Resolved')|list|length }}</b>
+			<span>Resolved</span>
+		</div>
+	</div>
+
+	<div class="card">
+		<h2>Python Priority Queue</h2>
+		{% if queue %}
+			<ol>
+				{% for c in queue %}
+					<li>
+						<b>#{{ c.id }} {{ c.title }}</b> — {{ c.category }} —
+						Priority <strong>{{ c.priority }}</strong> — {{ c.student_name }}
+						{% if loop.first %}
+							<a class="btn small" href="{{ url_for('process', cid=c.id, action='start') }}">Start Processing</a>
+						{% endif %}
+					</li>
+				{% endfor %}
+			</ol>
+		{% else %}
+			<p>No pending cases.</p>
+		{% endif %}
+	</div>
+
+	<div class="card">
+		<h2>All Cases</h2>
+		<table>
+			<tr>
+				<th>ID</th>
+				<th>Student</th>
+				<th>Type</th>
+				<th>Category</th>
+				<th>Priority</th>
+				<th>Status</th>
+				<th>Action</th>
+			</tr>
+			{% for c in cases %}
+				<tr>
+					<td>#{{ c.id }}</td>
+					<td>{{ c.student_name }}</td>
+					<td>{{ c.kind }}</td>
+					<td>{{ c.category }}</td>
+					<td>{{ c.priority }}</td>
+					<td>{{ c.status }}</td>
+					<td>
+						{% if c.status == 'In Progress' %}
+							<a class="btn small" href="{{ url_for('process', cid=c.id, action='resolve') }}">Mark Resolved</a>
+						{% elif c.status == 'Pending' %}
+							<a href="{{ url_for('history', cid=c.id) }}">History</a>
+						{% else %}
+							<a href="{{ url_for('history', cid=c.id) }}">History</a>
+						{% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+		</table>
+	</div>
+{% endblock %}

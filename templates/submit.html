@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div class="card">
+		<h2>Submit {{ kind }}</h2>
+		<form method="post">
+			<label>Category</label>
+			<select name="category">
+				{% for c in categories %}
+					<option>{{ c }}</option>
+				{% endfor %}
+			</select>
+			<label>Title</label>
+			<input name="title" required>
+			<label>Description</label>
+			<textarea name="description" required></textarea>
+			<label>Urgency</label>
+			<select name="urgency">
+				<option>Critical</option>
+				<option>High</option>
+				<option>Medium</option>
+				<option>Low</option>
+			</select>
+			<button>Submit &amp; Calculate Priority</button>
+		</form>
+	</div>
+{% endblock %}

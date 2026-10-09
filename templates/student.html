@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<h1>Student Dashboard</h1>
+	<div class="grid">
+		<div class="card">
+			<h3>Submit Request</h3>
+			<p>Certificates, scholarship, academic and services.</p>
+			<a class="btn" href="{{ url_for('submit', kind='Request') }}">Submit Request</a>
+		</div>
+		<div class="card">
+			<h3>Submit Complaint</h3>
+			<p>Grievance, anti-ragging, harassment, IT and facilities.</p>
+			<a class="btn" href="{{ url_for('submit', kind='Complaint') }}">Submit Complaint</a>
+		</div>
+	</div>
+
+	<div class="card">
+		<h2>My Submissions</h2>
+		{% if cases %}
+			<table>
+				<tr>
+					<th>ID</th>
+					<th>Type</th>
+					<th>Category</th>
+					<th>Priority</th>
+					<th>Status</th>
+					<th>History</th>
+				</tr>
+				{% for c in cases %}
+					<tr>
+						<td>#{{ c.id }}</td>
+						<td>{{ c.kind }}</td>
+						<td>{{ c.category }}</td>
+						<td><b>{{ c.priority }}</b></td>
+						<td>{{ c.status }}</td>
+						<td><a href="{{ url_for('history', cid=c.id) }}">View</a></td>
+					</tr>
+				{% endfor %}
+			</table>
+		{% else %}
+			<p>No submissions yet.</p>
+		{% endif %}
+	</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div class="card">
+		<h2>Case #{{ case.id }} History</h2>
+		<p><b>{{ case.title }}</b> — Priority {{ case.priority }}</p>
+		<h3>Stack (TOP →)</h3>
+		<ol class="stack">
+			{% for h in history %}
+				<li>
+					<b>{{ h.status }}</b><br>
+					{{ h.note }}
+					<small>{{ h.created_text }}</small>
+				</li>
+			{% endfor %}
+		</ol>
+	</div>
+{% endblock %}

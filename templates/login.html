@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<div class="card narrow">
+		<h1>Smart College</h1>
+		<p>Complaint &amp; Request Management System</p>
+		<h2>Login</h2>
+		<form method="post">
+			<label>Email</label>
+			<input name="email" required placeholder="student@college.com">
+			<label>Password</label>
+			<input name="password" type="password" required placeholder="student123">
+			<button>Login</button>
+		</form>
+		<p class="hint">
+			Demo Student: student@college.com / student123<br>
+			Demo Staff: staff@college.com / staff123
+		</p>
+		<a href="{{ url_for('register') }}">Register as Student</a>
+	</div>
+{% endblock %}
